@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,13 +17,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.galvezsh.material_login.R
 
-//@Preview( showBackground = true, showSystemUi = true, backgroundColor = 0xFF3C2E28 )
 @Composable
 fun LoginView( navigateToRecoverView: (String) -> Unit ) {
     var email: String by remember { mutableStateOf( "" ) }
@@ -30,22 +29,23 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
     val isValidEmail = false
     val isValidPassword = false
 
-    Box( modifier = Modifier.fillMaxSize().background( color = MaterialTheme.colorScheme.background ) ) {
-        Column(
-            modifier = Modifier.align( Alignment.TopCenter ).padding( horizontal = 24.dp ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    Box( modifier = Modifier
+        .fillMaxSize()
+        .background( color = MaterialTheme.colorScheme.background )
+        .padding( horizontal = 24.dp )
+    ) {
+        Column( modifier = Modifier.verticalScroll( rememberScrollState() ) ) {
             SquareImage(
                 id = R.drawable.ic_app,
                 size = 96.dp,
-                Modifier.padding( top = 64.dp )
+                Modifier.padding( top = 64.dp ).align( Alignment.CenterHorizontally )
             )
             Spacer( 24.dp )
             Text(
                 text = "Correo electrónico:",
                 fontSize = 18.sp,
                 color = Color.White,
-                modifier = Modifier.align( Alignment.Start ).padding( bottom = 8.dp )
+                modifier = Modifier.padding( bottom = 8.dp )
             )
             EmailField(
                 email = email,
@@ -57,7 +57,7 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
                 text = "Contraseña:",
                 fontSize = 18.sp,
                 color = Color.White,
-                modifier = Modifier.align( Alignment.Start ).padding( bottom = 8.dp )
+                modifier = Modifier.padding( bottom = 8.dp )
             )
             PasswordField(
                 password = password,
@@ -65,42 +65,25 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
                 onTextFieldChanged = { password = it }
             )
             Spacer( 8.dp )
-            if ( isValidEmail ) {
-                Text(
-                    text = "Correo electrónico válido",
-                    textAlign = TextAlign.Left,
-                    color = Color.Green,
-                    modifier = Modifier.align( Alignment.Start ).padding( top = 12.dp ),
-                )
-            } else {
-                Text(
-                    text = "Correo electrónico inválido",
-                    textAlign = TextAlign.Left,
-                    color = Color.Red,
-                    modifier = Modifier.align( Alignment.Start ).padding( top = 12.dp ),
-                )
-            }
-            if ( isValidPassword ) {
-                Text(
-                    text = "La contraseña tiene al menos 8 caracteres",
-                    textAlign = TextAlign.Left,
-                    color = Color.Green,
-                    modifier = Modifier.align( Alignment.Start ).padding( top = 12.dp ),
-                )
-            } else {
-                Text(
-                    text = "La contraseña debe tener al menos 8 caracteres",
-                    textAlign = TextAlign.Left,
-                    color = Color.Red,
-                    modifier = Modifier.align( Alignment.Start ).padding( top = 12.dp ),
-                )
-            }
+            TextFieldErrorLabel(
+                isValid = isValidEmail,
+                validText = "El correo electrónico es válido",
+                invalidText = "El correo electrónico no es válido",
+                modifier = Modifier
+            )
+            TextFieldErrorLabel(
+                isValid = isValidPassword,
+                validText = "La contraseña tiene al menos 8 caracteres",
+                invalidText = "La contraseña debe tener al menos 8 caracteres",
+                modifier = Modifier
+            )
+            Spacer( 64.dp )
         }
 
-        Column( modifier = Modifier.align( Alignment.BottomCenter ).padding( horizontal = 24.dp ) ) {
+        Column( modifier = Modifier.align( Alignment.BottomCenter ) ) {
             TextLink (
                 text = "¿Olvidaste la contraseña?",
-                modifier = Modifier.align( Alignment.CenterHorizontally ).padding( bottom = 24.dp ),
+                modifier = Modifier.align( Alignment.CenterHorizontally ).padding( bottom = 16.dp ),
                 onPressedLink = { navigateToRecoverView( email ) }
             )
             PrimaryButton(

@@ -15,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.galvezsh.material_login.R
@@ -26,22 +25,23 @@ fun RecoverView( newEmail: String ) {
 
     val isValidEmail = false
 
-    Box( modifier = Modifier.fillMaxSize().background( color = MaterialTheme.colorScheme.background ) ) {
-        Column(
-            modifier = Modifier.align( Alignment.TopCenter ).padding( horizontal = 24.dp ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    Box( modifier = Modifier
+        .fillMaxSize()
+        .background( color = MaterialTheme.colorScheme.background )
+        .padding( horizontal = 24.dp )
+    ) {
+        Column {
             SquareImage(
                 id = R.drawable.ic_app,
                 size = 96.dp,
-                Modifier.padding( top = 96.dp )
+                Modifier.padding( top = 96.dp ).align( Alignment.CenterHorizontally )
             )
             Spacer( 32.dp )
             Text(
                 text = "Correo electrónico:",
                 fontSize = 18.sp,
                 color = Color.White,
-                modifier = Modifier.align( Alignment.Start ).padding( bottom = 8.dp )
+                modifier = Modifier.padding( bottom = 8.dp )
             )
             EmailField(
                 email = email,
@@ -49,30 +49,19 @@ fun RecoverView( newEmail: String ) {
                 onTextFieldChanged = { email = it }
             )
             Spacer( 8.dp )
-            if ( isValidEmail ) {
-                Text(
-                    text = "Correo electrónico válido",
-                    textAlign = TextAlign.Left,
-                    color = Color.Green,
-                    modifier = Modifier.align( Alignment.Start ).padding( top = 12.dp ),
-                )
-            } else {
-                Text(
-                    text = "Correo electrónico inválido",
-                    textAlign = TextAlign.Left,
-                    color = Color.Red,
-                    modifier = Modifier.align( Alignment.Start ).padding( top = 12.dp ),
-                )
-            }
-        }
-
-        Column( modifier = Modifier.align( Alignment.BottomCenter ).padding( horizontal = 24.dp ) ) {
-            PrimaryButton(
-                text = "Recuperar contraseña",
-                enabled = isValidEmail,
-                modifier = Modifier.padding( bottom = 48.dp ),
-                onPressedButton = {  }
+            TextFieldErrorLabel(
+                isValid = isValidEmail,
+                validText = "El correo electrónico es válido",
+                invalidText = "El correo electrónico no es válido",
+                modifier = Modifier
             )
         }
+
+        PrimaryButton(
+            text = "Recuperar contraseña",
+            enabled = isValidEmail,
+            modifier = Modifier.padding( bottom = 48.dp ).align( Alignment.BottomCenter ),
+            onPressedButton = {  }
+        )
     }
 }

@@ -17,13 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.galvezsh.material_login.R
 
-//@Preview( showBackground = true, showSystemUi = true )
 @Composable
 fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Unit ) {
     val appName = LocalContext.current.getString( R.string.app_name )
 
-    Box( modifier = Modifier.fillMaxSize().background( color = MaterialTheme.colorScheme.background ) ) {
-        Column( modifier = Modifier.align( Alignment.TopCenter ), horizontalAlignment = Alignment.CenterHorizontally ) {
+    Box( modifier = Modifier
+        .fillMaxSize()
+        .background( color = MaterialTheme.colorScheme.background )
+        .padding( horizontal = 24.dp )
+    ) {
+        Column( horizontalAlignment = Alignment.CenterHorizontally ) {
             CircleImage(
                 id = R.drawable.ic_app,
                 size = 160.dp,
@@ -35,7 +38,6 @@ fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Un
                 fontSize = 22.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding( horizontal = 24.dp )
             )
             Spacer( 8.dp )
             Text(
@@ -43,7 +45,6 @@ fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Un
                 fontSize = 16.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding( horizontal = 24.dp )
             )
         }
 
@@ -51,14 +52,14 @@ fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Un
             PrimaryButton(
                 text = "Iniciar Sesión",
                 enabled = true,
-                modifier = Modifier.padding( horizontal = 24.dp ),
+                modifier = Modifier,
                 onPressedButton = { navigateToLoginView() }
             )
             Spacer( 8.dp )
             SecondaryButton(
                 text = "Crear Cuenta",
                 enabled = true,
-                modifier = Modifier.padding( horizontal = 24.dp ),
+                modifier = Modifier,
                 onPressedButton = {  navigateToRegisterView() }
             )
             Spacer( 24.dp )

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,11 +38,12 @@ fun RegisterView() {
     val isValidPassword = false
     val isValidPasswordCheck = false
 
-    Box( modifier = Modifier.fillMaxSize().background( color = MaterialTheme.colorScheme.background ) ) {
-        Column(
-            modifier = Modifier.align( Alignment.TopCenter ).padding( horizontal = 24.dp ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    Box( modifier = Modifier
+        .fillMaxSize()
+        .background( color = MaterialTheme.colorScheme.background )
+        .padding( horizontal = 24.dp )
+    ) {
+        Column( modifier = Modifier.verticalScroll( rememberScrollState() ) ) {
             Spacer( 32.dp )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -51,7 +54,6 @@ fun RegisterView() {
                         text = "Nombre:",
                         fontSize = 18.sp,
                         color = Color.White,
-                        modifier = Modifier
                     )
                     CommonField(
                         text = firstName,
@@ -64,7 +66,6 @@ fun RegisterView() {
                         text = "Apellidos:",
                         fontSize = 18.sp,
                         color = Color.White,
-                        modifier = Modifier
                     )
                     CommonField(
                         text = lastName,
@@ -78,7 +79,7 @@ fun RegisterView() {
                 text = "Correo electrónico:",
                 fontSize = 18.sp,
                 color = Color.White,
-                modifier = Modifier.align( Alignment.Start ).padding( bottom = 8.dp )
+                modifier = Modifier.padding( bottom = 8.dp )
             )
             EmailField(
                 email = email,
@@ -90,7 +91,7 @@ fun RegisterView() {
                 text = "Contraseña:",
                 fontSize = 18.sp,
                 color = Color.White,
-                modifier = Modifier.align( Alignment.Start ).padding( bottom = 8.dp )
+                modifier = Modifier.padding( bottom = 8.dp )
             )
             PasswordField(
                 password = password,
@@ -102,7 +103,7 @@ fun RegisterView() {
                 text = "Confirmar contraseña:",
                 fontSize = 18.sp,
                 color = Color.White,
-                modifier = Modifier.align( Alignment.Start ).padding( bottom = 8.dp )
+                modifier = Modifier.padding( bottom = 8.dp )
             )
             PasswordField(
                 password = secondPassword,
@@ -114,35 +115,35 @@ fun RegisterView() {
                 isValid = isValidFullName,
                 validText = "El nombre y los apellidos están completos",
                 invalidText = "El nombre y los apellidos están incompletos",
-                modifier = Modifier.align( Alignment.Start )
+                modifier = Modifier
             )
             TextFieldErrorLabel(
                 isValid = isValidEmail,
                 validText = "El correo electrónico es válido",
                 invalidText = "El correo electrónico no es válido",
-                modifier = Modifier.align( Alignment.Start )
+                modifier = Modifier
             )
             TextFieldErrorLabel(
                 isValid = isValidPassword,
                 validText = "La contraseña tiene al menos 8 caracteres",
                 invalidText = "La contraseña debe tener al menos 8 caracteres",
-                modifier = Modifier.align( Alignment.Start )
+                modifier = Modifier
             )
             TextFieldErrorLabel(
                 isValid = isValidPasswordCheck,
                 validText = "Las contraseñas coinciden",
                 invalidText = "Las contraseñas no coinciden",
-                modifier = Modifier.align( Alignment.Start )
+                modifier = Modifier
             )
+            Spacer( 64.dp )
+
         }
 
-        Column( modifier = Modifier.align( Alignment.BottomCenter ).padding( horizontal = 24.dp ) ) {
-            PrimaryButton(
-                text = "Registrarse",
-                enabled = ( isValidFullName && isValidEmail && isValidPassword && isValidPasswordCheck ),
-                modifier = Modifier.padding( bottom = 48.dp ),
-                onPressedButton = {  }
-            )
-        }
+        PrimaryButton(
+            text = "Registrarse",
+            enabled = ( isValidFullName && isValidEmail && isValidPassword && isValidPasswordCheck ),
+            modifier = Modifier.align( Alignment.BottomCenter ).padding( bottom = 48.dp ),
+            onPressedButton = {  }
+        )
     }
 }
