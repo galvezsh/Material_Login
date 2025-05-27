@@ -1,4 +1,4 @@
-package com.galvezsh.material_login.ui.view
+package com.galvezsh.material_login.presentation.startScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,6 +16,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.galvezsh.material_login.R
+import com.galvezsh.material_login.presentation.CircleImage
+import com.galvezsh.material_login.presentation.PrimaryButton
+import com.galvezsh.material_login.presentation.SecondaryButton
+import com.galvezsh.material_login.presentation.Spacer
 
 @Composable
 fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Unit ) {
@@ -30,16 +34,16 @@ fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Un
             CircleImage(
                 id = R.drawable.ic_app,
                 size = 160.dp,
-                modifier = Modifier.padding( top = 160.dp )
+                modifier = Modifier.padding(top = 160.dp)
             )
-            Spacer( 8.dp )
+            Spacer(8.dp)
             Text(
                 text = "¡Unete a $appName!",
                 fontSize = 22.sp,
                 color = Color.White,
                 textAlign = TextAlign.Center,
             )
-            Spacer( 8.dp )
+            Spacer(8.dp)
             Text(
                 text = "¡Unete a la comundidad Android más grande de toda habla hispana!",
                 fontSize = 16.sp,
@@ -55,14 +59,14 @@ fun StartView( navigateToLoginView: () -> Unit, navigateToRegisterView: () -> Un
                 modifier = Modifier,
                 onPressedButton = { navigateToLoginView() }
             )
-            Spacer( 8.dp )
+            Spacer(8.dp)
             SecondaryButton(
                 text = "Crear Cuenta",
                 enabled = true,
                 modifier = Modifier,
-                onPressedButton = {  navigateToRegisterView() }
+                onPressedButton = { navigateToRegisterView() }
             )
-            Spacer( 24.dp )
+            Spacer(24.dp)
         }
     }
 }

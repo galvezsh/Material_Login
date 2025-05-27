@@ -4,10 +4,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.galvezsh.material_login.ui.view.LoginView
-import com.galvezsh.material_login.ui.view.RecoverView
-import com.galvezsh.material_login.ui.view.RegisterView
-import com.galvezsh.material_login.ui.view.StartView
+import com.galvezsh.material_login.presentation.loginScreen.LoginView
+import com.galvezsh.material_login.presentation.recoverScreen.RecoverView
+import com.galvezsh.material_login.presentation.registerScreen.RegisterView
+import com.galvezsh.material_login.presentation.startScreen.StartView
 
 @Composable
 fun NavigationWrapper() {
@@ -33,7 +33,7 @@ fun NavigationWrapper() {
         }
 
         composable<RecoverScreen> {
-            RecoverView( it.toRoute<RecoverScreen>().email )
+            RecoverView( newEmail = it.toRoute<RecoverScreen>().email )
         }
     }
 }

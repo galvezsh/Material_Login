@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
-    // Kotlin serialize
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serializacion)
 }
 
@@ -63,9 +64,12 @@ dependencies {
     // Extended icons for buttons
     implementation(libs.androidx.material.icons.extended)
 
+    // Dagger hilt
+    implementation(libs.dagger.hilt)
+    ksp(libs.dagger.hilt.compiler)
+    implementation(libs.dagger.hilt.navigation)
+
     // Navigation-compose
     implementation(libs.androidx.navigation.compose)
-
-    // Kotlin serialize
     implementation(libs.kotlinx.serliazation.json)
 }

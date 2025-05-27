@@ -1,4 +1,4 @@
-package com.galvezsh.material_login.ui.view
+package com.galvezsh.material_login.presentation.loginScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,24 +10,30 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.galvezsh.material_login.R
+import com.galvezsh.material_login.presentation.EmailField
+import com.galvezsh.material_login.presentation.PasswordField
+import com.galvezsh.material_login.presentation.PrimaryButton
+import com.galvezsh.material_login.presentation.Spacer
+import com.galvezsh.material_login.presentation.SquareImage
+import com.galvezsh.material_login.presentation.TextFieldErrorLabel
+import com.galvezsh.material_login.presentation.TextLink
 
 @Composable
-fun LoginView( navigateToRecoverView: (String) -> Unit ) {
-    var email: String by remember { mutableStateOf( "" ) }
-    var password: String by remember { mutableStateOf( "" ) }
+fun LoginView( navigateToRecoverView: (String) -> Unit, loginViewModel: LoginViewModel = hiltViewModel() ) {
 
-    val isValidEmail = false
-    val isValidPassword = false
+    val email by loginViewModel.email.collectAsState()
+    val pass by loginViewModel.pass.collectAsState()
+    val isValidEmail by loginViewModel.isValidEmail.collectAsState()
+    val isValidPass by loginViewModel.isValidPass.collectAsState()
 
     Box( modifier = Modifier
         .fillMaxSize()
@@ -38,9 +44,9 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
             SquareImage(
                 id = R.drawable.ic_app,
                 size = 96.dp,
-                Modifier.padding( top = 64.dp ).align( Alignment.CenterHorizontally )
+                Modifier.padding(top = 64.dp).align(Alignment.CenterHorizontally)
             )
-            Spacer( 24.dp )
+            Spacer(24.dp)
             Text(
                 text = "Correo electrónico:",
                 fontSize = 18.sp,
@@ -50,9 +56,9 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
             EmailField(
                 email = email,
                 placeholder = "example@email.com",
-                onTextFieldChanged = { email = it }
+                onTextFieldChanged = { loginViewModel.onChangedEmail( it ) }
             )
-            Spacer( 16.dp )
+            Spacer(16.dp)
             Text(
                 text = "Contraseña:",
                 fontSize = 18.sp,
@@ -60,11 +66,11 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
                 modifier = Modifier.padding( bottom = 8.dp )
             )
             PasswordField(
-                password = password,
+                password = pass,
                 placeholder = "example@1234",
-                onTextFieldChanged = { password = it }
+                onTextFieldChanged = { loginViewModel.onChangedPassword( it ) }
             )
-            Spacer( 8.dp )
+            Spacer(8.dp)
             TextFieldErrorLabel(
                 isValid = isValidEmail,
                 validText = "El correo electrónico es válido",
@@ -72,25 +78,25 @@ fun LoginView( navigateToRecoverView: (String) -> Unit ) {
                 modifier = Modifier
             )
             TextFieldErrorLabel(
-                isValid = isValidPassword,
+                isValid = isValidPass,
                 validText = "La contraseña tiene al menos 8 caracteres",
                 invalidText = "La contraseña debe tener al menos 8 caracteres",
                 modifier = Modifier
             )
-            Spacer( 64.dp )
+            Spacer(64.dp)
         }
 
         Column( modifier = Modifier.align( Alignment.BottomCenter ) ) {
-            TextLink (
+            TextLink(
                 text = "¿Olvidaste la contraseña?",
-                modifier = Modifier.align( Alignment.CenterHorizontally ).padding( bottom = 16.dp ),
-                onPressedLink = { navigateToRecoverView( email ) }
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 16.dp),
+                onPressedLink = { navigateToRecoverView(email) }
             )
             PrimaryButton(
                 text = "Iniciar sesión",
-                enabled = ( isValidEmail && isValidPassword ),
-                modifier = Modifier.padding( bottom = 48.dp ),
-                onPressedButton = {  }
+                enabled = (isValidEmail && isValidPass),
+                modifier = Modifier.padding(bottom = 48.dp),
+                onPressedButton = { loginViewModel.onPressedLoginButton() }
             )
         }
     }
